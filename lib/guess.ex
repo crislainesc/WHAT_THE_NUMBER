@@ -1,18 +1,5 @@
 defmodule Guess do
-  @moduledoc """
-  Documentation for `Guess`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Guess.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def run() do
+    IO.puts("Let's play What The Number!")
   end
 end
