@@ -19,23 +19,23 @@ defmodule Guess do
   def play(picked_number) do
     IO.gets("Ja escolhi meu numero. Qual o seu palpite? ")
     |> parse_input()
-    |> guess(picked_number)
+    |> guess(picked_number, 1)
   end
 
-  def guess(user_guess, picked_number) when user_guess > picked_number do
+  def guess(user_guess, picked_number, counter) when user_guess > picked_number do
     IO.gets("Muito alto! Mas voce pode tentar de novo: ")
     |> parse_input()
-    |> guess(picked_number)
+    |> guess(picked_number, counter + 1)
   end
 
-  def guess(user_guess, picked_number) when user_guess < picked_number do
+  def guess(user_guess, picked_number, counter) when user_guess < picked_number do
     IO.gets("Esta bem abaixo do que eu pensei... Tente de novo: ")
     |> parse_input()
-    |> guess(picked_number)
+    |> guess(picked_number, counter + 1)
   end
 
-  def guess(_user_guess, _picked_number) do
-    IO.puts("Incrivel. Voce acertou!")
+  def guess(_user_guess, _picked_number, counter) do
+    IO.puts("Incrivel. Voce acertou! #{counter} tentativas.")
   end
 
   def pickup_number(level) do
