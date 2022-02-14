@@ -15,6 +15,11 @@ defmodule Guess do
     |> IO.inspect()
   end
 
+  def play(picked_number) do
+    IO.gets("Ja escolhi meu numero. Qual o seu palpite?")
+    |> parse_input()
+  end
+
   def pickup_number(level) do
     level
     |> get_range()
