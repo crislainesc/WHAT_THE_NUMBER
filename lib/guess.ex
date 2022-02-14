@@ -36,6 +36,15 @@ defmodule Guess do
 
   def guess(_user_guess, _picked_number, counter) do
     IO.puts("Incrivel. Voce acertou! #{counter} tentativas.")
+    show_score()
+  end
+
+  def show_score() do
+    %{1..1 => "Voce consegue mesmo ler mentes!",
+    2..4 => "Muito interessante...",
+    5..6 => "Voce consegue fazer melhor que isso!",
+    7..50 => "Mais sorte na proxima..."
+  }
   end
 
   def pickup_number(level) do
