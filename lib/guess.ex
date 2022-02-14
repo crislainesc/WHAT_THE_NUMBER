@@ -12,12 +12,30 @@ defmodule Guess do
     IO.gets("Escolha um nivel de difuculdade (1, 2 ou 3): ")
     |> parse_input()
     |> pickup_number()
+    |> play()
     |> IO.inspect()
   end
 
   def play(picked_number) do
-    IO.gets("Ja escolhi meu numero. Qual o seu palpite?")
+    IO.gets("Ja escolhi meu numero. Qual o seu palpite? ")
     |> parse_input()
+    |> guess(picked_number)
+  end
+
+  def guess(user_guess, picked_number) when user_guess > picked_number do
+    IO.gets("Muito alto! Mas voce pode tentar de novo: ")
+    |> parse_input()
+    |> guess(picked_number)
+  end
+
+  def guess(user_guess, picked_number) when user_guess < picked_number do
+    IO.gets("Esta bem abaixo do que eu pensei... Tente de novo: ")
+    |> parse_input()
+    |> guess(picked_number)
+  end
+
+  def guess(_user_guess, _picked_number) do
+    IO.puts("Incrivel. Voce acertou!")
   end
 
   def pickup_number(level) do
