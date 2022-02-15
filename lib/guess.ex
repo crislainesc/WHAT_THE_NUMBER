@@ -15,46 +15,6 @@ defmodule Guess do
     |> play()
   end
 
-  def play(picked_number) do
-    IO.gets("Ja escolhi meu numero. Qual o seu palpite? ")
-    |> parse_input()
-    |> guess(picked_number, 1)
-  end
-
-  def guess(user_guess, picked_number, counter) when user_guess > picked_number do
-    IO.gets("Muito alto! Mas voce pode tentar de novo: ")
-    |> parse_input()
-    |> guess(picked_number, counter + 1)
-  end
-
-  def guess(user_guess, picked_number, counter) when user_guess < picked_number do
-    IO.gets("Esta bem abaixo do que eu pensei... Tente de novo: ")
-    |> parse_input()
-    |> guess(picked_number, counter + 1)
-  end
-
-  def guess(_user_guess, _picked_number, counter) do
-    IO.puts("Incrivel. Voce acertou! #{counter} tentativas.")
-    show_score(counter)
-  end
-
-  def show_score(guesses) do
-    {_, message} = %{1..1 => "Voce consegue mesmo ler mentes!",
-    2..4 => "Muito interessante...",
-    5..6 => "Voce consegue fazer melhor que isso!",
-    7..50 => "Mais sorte na proxima..."}
-    |> Enum.find(fn {range, _} ->
-      Enum.member?(range, guesses)
-    end)
-    IO.puts(message)
-  end
-
-  def pickup_number(level) do
-    level
-    |> get_range()
-    |> Enum.random()
-  end
-
   def parse_input(:error) do
     IO.puts("Entrada invalida!!")
     run()
@@ -68,6 +28,12 @@ defmodule Guess do
     |> parse_input()
   end
 
+  def pickup_number(level) do
+    level
+    |> get_range()
+    |> Enum.random()
+  end
+
   def get_range(level) do
     case level do
       1 -> 1..10
@@ -76,6 +42,42 @@ defmodule Guess do
       _ -> IO.puts("Nivel invalido!!")
       run()
     end
+  end
+
+  def play(picked_number) do
+    IO.gets("Ja escolhi meu numero. Qual o seu palpite? ")
+    |> parse_input()
+    |> guess(picked_number, 1)
+  end
+
+  def guess(user_guess, picked_number, counter)when user_guess == picked_number do
+    IO.puts("Incrivel. Acertou com #{counter} tentativas.")
+    show_score(counter)
+  end
+
+  def guess(user_guess, picked_number, counter) do
+    if user_guess > picked_number do
+      IO.gets("Muito alto! Mas voce pode tentar de novo: ")
+    else
+      IO.gets("Muito baixo! Tente de novo: ")
+    end
+    |> parse_input()
+    |> guess(picked_number, counter + 1)
+  end
+
+
+  def show_score(guesses) when guesses > 6 do
+    IO.puts("Mais sorte na proxima...")
+  end
+
+  def show_score(guesses) do
+    {_, message} = %{1..1 => "Voce consegue mesmo ler mentes!",
+    2..4 => "Muito interessante...",
+    5..6 => "Voce consegue fazer melhor que isso!"}
+    |> Enum.find(fn {range, _} ->
+      Enum.member?(range, guesses)
+    end)
+    IO.puts(message)
   end
 
 end
