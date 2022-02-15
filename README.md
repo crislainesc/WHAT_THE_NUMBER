@@ -1,7 +1,5 @@
 # *Qual é o número?*
 
-<br>
-
 ## 🚀 Tecnologias
 
 Esse projeto foi desenvolvido com Elixir.
