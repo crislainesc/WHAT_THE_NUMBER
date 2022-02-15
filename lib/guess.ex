@@ -13,7 +13,6 @@ defmodule Guess do
     |> parse_input()
     |> pickup_number()
     |> play()
-    |> IO.inspect()
   end
 
   def play(picked_number) do
@@ -36,15 +35,18 @@ defmodule Guess do
 
   def guess(_user_guess, _picked_number, counter) do
     IO.puts("Incrivel. Voce acertou! #{counter} tentativas.")
-    show_score()
+    show_score(counter)
   end
 
-  def show_score() do
-    %{1..1 => "Voce consegue mesmo ler mentes!",
+  def show_score(guesses) do
+    {_, message} = %{1..1 => "Voce consegue mesmo ler mentes!",
     2..4 => "Muito interessante...",
     5..6 => "Voce consegue fazer melhor que isso!",
-    7..50 => "Mais sorte na proxima..."
-  }
+    7..50 => "Mais sorte na proxima..."}
+    |> Enum.find(fn {range, _} ->
+      Enum.member?(range, guesses)
+    end)
+    IO.puts(message)
   end
 
   def pickup_number(level) do
